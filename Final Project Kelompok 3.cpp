@@ -16,13 +16,55 @@ void gotoxy(int x, int y) {
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+void garis(int x) {
+	int z;
+	for(z = 0; z < x; z++) {
+		printf("=");
+	}
+	printf("\n");
+}
+
+void delay() {
+	int delay;
+	delay=1;
+	while(delay<1000000000) {
+		delay++;
+	}
+}	
+
+void load1()
+{	
+  	char load[] = {'S','T','A','R','T','>'};
+	for(int i=0; i<6; i++) {
+		printf("%c\t", load[i]);
+		delay();
+	}
+	Sleep(2);
+}
+
+void load2()
+{
+	system("cls");
+	gotoxy(43, 8); cout<<"Final Project Pemrograman Lanjut E081";
+	gotoxy(51, 9); cout<<"Program Penilaian Buku";
+	gotoxy(53, 11); cout<<"Anggota Kelompok 3:";
+	gotoxy(39, 12); cout<<"1. Hamida Wefi Niamaputri\t(21081010080)";
+	gotoxy(39, 13); cout<<"2. Bima Arya Kurniawan\t\t(21081010081)";
+	gotoxy(39, 14); cout<<"3. Masyura Fanni Ramadhan\t(21081010103)";
+	gotoxy(39, 15); cout<<"4. Mochammad Yazid Farhani\t(21081010137)";
+	gotoxy(39, 16); cout<<"5. Muhammad Ariq Hawari Adiputra\t(21081010149)";
+	printf("\n\n\t\t\t\t\t  ");
+	system("pause");
+	system("cls");
+}
+
 void loadbar()
 {
-	int bar1 = 177, bar2 = 219;
-
+	int i, bar1 = 177, bar2 = 219;
+	
 	cout<<"Loading...\n";
   	cout<<"\n\t\t\t\t\t\t";
-
+	
   	for(int i=0; i<25; i++)
 	  cout<< (char)bar1;
 	  
@@ -31,9 +73,8 @@ void loadbar()
 
   	for(int i=0; i<25; i++)
   		cout<< (char)bar2, Sleep(50);
+  	Sleep(0.5);	
 		  
-	cout<<"\n\t\t\t\t\t\t";
-	system("pause");
 }
 
 struct Date
@@ -58,16 +99,12 @@ struct Books
 };
     
 int main(){
-  	system("color 74");
-	gotoxy(45, 2); cout<<"Final Project Pemrograman Lanjut E081";
-	gotoxy(52, 3); cout<<"Program Penilaian Buku";
-	gotoxy(45, 5); cout<<"Anggota Kelompok 3:";
-	gotoxy(45, 6); cout<<"1. Hamida Wefi Niamaputri\t\t(21081010080)";
-	gotoxy(45, 7); cout<<"2. Bima Arya Kurniawan\t\t(21081010081)";
-	gotoxy(45, 8); cout<<"3. Masyura Fanni Ramadhan\t\t(21081010103)";
-	gotoxy(45, 9); cout<<"4. Mochammad Yazid Farhani\t\t(21081010137)";
-	gotoxy(45, 10); cout<<"5. Muhammad Ariq Hawari Adiputra\t(21081010149)";
-  	gotoxy(48,15); loadbar();
+	int i;
+	gotoxy(32,13);
+	system("color 0d");
+	load1();
+	load2();
+  	gotoxy(48,12); loadbar();
 	system("cls");
 
 	//code
@@ -75,16 +112,24 @@ int main(){
 
 	do
 	{
+		system("color 06");
 		system("cls");
+		garis(120);
+		printf("\t\t\t\t\t Final Project Pemrograman Lanjut E081\n");
+		printf("\t\t\t\t\t\t Program Penilaian Buku\n");
+		garis(120);
+		printf("\t\t\t\t\t\t\tMENU UTAMA\n");
+	    puts("\n Pilih Menu dibawah ini untuk menjalankan aplikasi");
+	    puts("  1.  Tambah Buku");
+	    puts("  2.  Tampilkan Buku");
+	    puts("  3.  Ubah Buku");
+	    puts("  4.  Hapus Buku");
+	    puts("  5.  Urutkan Buku");
+	    puts("  6.  Cari Buku");
+	    puts("  7.  Penilaian Buku");
+	    puts(" Esc. Exit\n");
 
-		cout<<"Menu Program:";
-		cout<<"1. Tambah Buku \n2. Lihat Buku \n3. Ubah Buku \n4. Hapus Buku \n5. Urutkan Buku"<<endl;
-		cout<<"6. Cari Buku \n7. Tambah Penilaian Buku \n8. Lihat Penilaian Buku"<<endl;
-		cout<<"9. Hapus Penilaian Buku \n10. Exit Program"<<endl;
-		cout<<"Input: ";
-		cin>>pilih;
-
-		switch (pilih)
+		switch (getch())
 		{
 		case 1: // Tambah Buku
 			/* code */
@@ -100,26 +145,14 @@ int main(){
 			break;
 		case 5: // Urutkan Buku
 			/* code */
+			break;
 		case 6: // Cari Buku
 			/* code */
 			break;
-		case 7: // Tambah Penilaian Buku
+		case 7: // Penilaian Buku
 			/* code */
-			break;
-		case 8: // Hapus Penilaian Buku
-			/* code */
-			break;
-		case 9: // Lihat Penilaian Buku
-			/* code */
-			break;
-		case 10: // Exit Program
-			cout<<"Program Berhenti!!!"<<endl;
-			break;
-		default:
-			cout<<"Input salah!!!"<<endl;
 			break;
 		}
-
-		getche();
-	} while (pilih != 10);
+		
+	} while (getch()!= 27);
 }
