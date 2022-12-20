@@ -100,7 +100,6 @@ int main(){
 			break;
 		case 5: // Urutkan Buku
 			/* code */
-			break;
 		case 6: // Cari Buku
 			/* code */
 			break;
