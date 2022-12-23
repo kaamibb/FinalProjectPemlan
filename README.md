@@ -16,5 +16,5 @@
 | Hamida Wefi Niamaputri      | 21081010080 |
 | Bima Arya Kurniawan      | 21081010081 |
 | Masyura Fanni Ramdhan      | 21081010103 |
-| mochammad Yazid Farhani      | 21081010137 |
+| Mochammad Yazid Farhani      | 21081010137 |
 | Muhammad Ariq Hawari Adiputra     | 21081010149 |
