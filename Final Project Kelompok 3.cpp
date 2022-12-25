@@ -465,6 +465,234 @@ void hal_desc()
 	fclose (fp);
 }
 
+void tampilcari()
+{
+	databuku d1;
+	FILE *fp;
+	int j = 0;
+
+	printf("\n\t\t\t\t\t\tHASIL PENCARIAN\n");
+
+	fp = fopen ("ubahdata.txt", "r");
+
+	while (fread(&d1, sizeof(databuku),1,fp)) {
+		printf(" Data Buku Ke - %i\n",j+1);
+		printf(" ------------------------------------\n");
+		printf(" Judul Buku\t\t: %s\n",d1.judul);
+		printf(" Sutradara\t\t: %s\n",d1.pengarang);
+		printf(" Genre\t\t\t: %s\n",d1.genre);
+		printf(" Tanggal Perilisan\t: %s\n",d1.tanggal);
+		printf(" Rating Umur\t\t: %s\n",d1.rating);
+		printf(" Halaman Buku\t\t: %s\n",d1.halaman);
+		printf("\n");
+		j++;
+	}
+
+	fclose(fp);
+	printf(" \n Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+}
+
+void carijudul()
+{
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char judul[50];
+
+	system("cls");
+	printf("\t\t\t\t\t\tMENU CARI BUKU BERDASARKAN JUDUL\n\n");
+
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+
+	printf(" Masukkan Nama Buku Yang Ingin Dicari : ");
+	gets(judul);
+
+	while (fread(&d1, sizeof(databuku), 1, fp))
+		if((strcmp (judul, d1.judul) == 0)) {
+			ditemukan = 1;
+			fwrite (&d1, sizeof (databuku), 1, fp1);
+		}
+
+	fclose(fp1);
+
+	if (ditemukan)
+		tampilcari();
+	else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+
+	fclose(fp);
+}
+
+void caripengarang()
+{
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char sutra[50];
+
+	system("cls");
+	printf("\t\t\t\t\t\tMENU CARI Buku BERDASARKAN PENGARANG\n\n");
+
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+
+	printf(" Masukkan Nama Pengarang Buku Yang Ingin Dicari : ");
+	gets(sutra);
+
+	while (fread(&d1, sizeof(databuku), 1, fp))
+		if((strcmp (sutra, d1.pengarang) == 0)) {
+			ditemukan = 1;
+			fwrite (&d1, sizeof (databuku), 1, fp1);
+		}
+	
+	fclose(fp1);
+	
+	if (ditemukan)
+		tampilcari();
+	else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+
+	fclose(fp);
+}
+
+void carigenre(){
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char genre[50];
+
+	system("cls");
+	printf("\t\t\t\t\t\tMENU CARI BUKU BERDASARKAN GENRE\n\n");
+
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+
+	printf(" Masukkan Genre Buku Yang Ingin Dicari : ");
+	gets(genre);
+
+	while (fread(&d1, sizeof(databuku), 1, fp))
+		if((strcmp (genre, d1.genre) == 0)) {
+			ditemukan = 1;
+			fwrite (&d1, sizeof (databuku), 1, fp1);
+		}
+	
+	fclose(fp1);
+
+	if (ditemukan)
+		tampilcari();
+	else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+
+	fclose(fp);
+}
+
+void caritanggal()
+{
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char tanggal[20];
+
+	system("cls");
+	printf("\t\t\t\t\t\tMENU CARI BUKU BERDASARKAN TANGGAL PERILISAN\n\n");
+
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+
+	printf(" Masukkan Tanggal Perilisan Buku Yang Ingin Dicari : ");
+	gets(tanggal);
+
+	while (fread(&d1, sizeof(databuku), 1, fp))
+		if((strcmp (tanggal, d1.tanggal) == 0)) {
+			ditemukan = 1;
+			fwrite (&d1, sizeof (databuku), 1, fp1);
+		}
+	
+	fclose(fp1);
+
+	if (ditemukan)
+		tampilcari();
+	else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+	
+	fclose(fp);
+}
+
+void carihalaman()
+{
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char halaman[50];
+
+	system("cls");
+	printf("\t\t\t\t\t\tMENU CARI BUKU BERDASARKAN HALAMANNYA\n\n");
+
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+
+	printf(" Masukkan Halaman Buku Yang Ingin Dicari : ");
+	gets(halaman);
+
+	while (fread(&d1, sizeof(databuku), 1, fp))
+		if((strcmp (halaman, d1.halaman) == 0)) {
+			ditemukan = 1;
+			fwrite (&d1, sizeof (databuku), 1, fp1);
+		}
+	
+	fclose(fp1);
+
+	if (ditemukan)
+		tampilcari();
+	else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+
+	fclose(fp);
+}
+
+void menucari()
+{
+	do {
+		system("cls");
+		printf("\t\t\t\t\t\tMENU SEARCHING DATA\n\n");
+		puts("\n  Pilih Menu Dibawah Ini Untuk Menentukan Metode Pencarian");
+		puts("   1.  Cari Berdasarkan Judul Buku");
+	    puts("   2.  Cari Berdasarkan Nama Pengarang");
+	    puts("   3.  Cari Berdasarkan Genre Buku");
+	    puts("   4.  Cari Berdasarkan Tanggal Perilisan");
+	    puts("   5.  Cari Berdasarkan Halaman Buku");
+	    puts("   0.  Kembali Ke Menu Awal");
+
+		switch(getch()){
+			case '1' : carijudul();
+	        	break;
+	        case '2' : caripengarang();
+	        	break;
+	        case '3' : carigenre();
+	        	break;
+	        case '4' : caritanggal();
+	        	break;
+	        case '5' : carihalaman();
+	        	break;
+	        case '0' : goto awal;
+	        	break;
+		}	
+	}
+	while(getch()!=27);
+	awal:;
+}
+
 void menuurut()
 {
 	system("cls");
@@ -568,6 +796,7 @@ int main(int argc, char *argv[]){
 				menuurut();
 				break;
 			case '6' :// Cari Buku
+				menucari();
 				break;
 			case '7' :// Penilaian Buku
 				break;
