@@ -118,6 +118,29 @@ void tambahdata() {
 	printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
 }
 
+void lihatbuku() {
+	databuku d1;
+	FILE *fp;
+	int j = 0;
+	system("cls");
+	printf("\n\t\t\t\t\t\tMENU TAMPILKAN DATA\n\n");
+	fp = fopen ("databuku.txt", "r");
+	while (fread(&d1, sizeof(databuku),1,fp)) {
+		printf(" Data Buku Ke - %i\n",j+1);
+		printf(" ------------------------------------\n");
+		printf(" Judul Buku\t\t: %s\n",d1.judul);
+		printf(" Pengarang\t\t: %s\n",d1.pengarang);
+		printf(" Genre\t\t\t: %s\n",d1.genre);
+		printf(" Tanggal Perilisan\t: %s\n",d1.tanggal);
+		printf(" Rating Umur\t\t: %s\n",d1.rating);
+		printf(" Halaman Buku\t\t: %s\n",d1.halaman);
+		printf("\n");
+		j++;
+	}
+	fclose(fp);
+	printf(" \n Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+}
+
 
 int main(int argc, char *argv[]){
 	int i;
@@ -152,6 +175,7 @@ int main(int argc, char *argv[]){
 			tambahdata();
 			break;
 		case '2' :// Lihat Buku
+			lihatbuku();
 			break;
 		case '3' :// Ubah Buku
 	        break;
