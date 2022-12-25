@@ -16,6 +16,40 @@ typedef struct databuku
 	char halaman[100];
 }databuku;
 
+typedef struct Penilaian
+{
+	char judul_bk[30];
+	char namap[30];
+	char pekerjaan[20];
+
+	struct menilai
+	{
+		int nilai;
+	}menilai[10];
+
+	int total;
+	float rata;
+}penilaian;
+
+struct pertanyaan
+{
+	char teks[100];
+};
+
+pertanyaan jumlah[10] =
+{
+	{"Apakah buku ini sesuai ekspetasi anda?"},
+	{"Apakah alur cerita buku ini menyenangkan?"},
+	{"?"},
+	{"?"},
+	{"Berikan penilaian untuk tokoh dari buku tersebut?"},
+	{"?"},
+	{"?"},
+	{"Seberapa besar pesan yang disampaikan oleh buku tersebut?"},
+	{"?"},
+	{"?"}
+};
+
 void gotoxy(int x, int y) {
     COORD coord;
     coord.X = x;
@@ -33,8 +67,8 @@ void garis(int x) {
 
 void delay() {
 	int delay;
-	delay=1;
-	while(delay<1000000000) {
+	delay = 1;
+	while(delay<800000000) {
 		delay++;
 	}
 }	
@@ -42,10 +76,12 @@ void delay() {
 void load1()
 {	
   	char load[] = {'S','T','A','R','T','>'};
-	for(int i=0; i<6; i++) {
+
+	for(int i = 0; i < 6; i++) {
 		printf("%c\t", load[i]);
 		delay();
 	}
+
 	Sleep(2);
 }
 
@@ -72,22 +108,24 @@ void loadbar()
 	cout<<"Loading...\n";
   	cout<<"\n\t\t\t\t\t\t";
 	
-  	for(int i=0; i<25; i++)
+  	for(int i = 0; i < 25; i++)
 	  cout<< (char)bar1;
 	  
 	cout<<"\r";
 	cout<<"\t\t\t\t\t\t";
 
-  	for(int i=0; i<25; i++)
+  	for(int i = 0; i < 25; i++)
   		cout<< (char)bar2, Sleep(50);
-  	Sleep(0.5);	
-		  
+
+  	Sleep(0.5);	  
 }
 
-void tambahdata() {
+void tambahdata()
+{
 	databuku *d;
 	FILE *fp;
 	int n, i, j;
+
 	system("cls");
 	printf("\n\t\t\t\t\t\tMENU TAMBAH DATA\n\n");
 	printf (" Masukkan Jumlah Data Buku Yang Akan diinput : ");
@@ -118,13 +156,16 @@ void tambahdata() {
 	printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
 }
 
-void lihatbuku() {
+void lihatbuku()
+{
 	databuku d1;
 	FILE *fp;
 	int j = 0;
+
 	system("cls");
 	printf("\n\t\t\t\t\t\tMENU TAMPILKAN DATA\n\n");
 	fp = fopen ("databuku.txt", "r");
+
 	while (fread(&d1, sizeof(databuku),1,fp)) {
 		printf(" Data Buku Ke - %i\n",j+1);
 		printf(" ------------------------------------\n");
@@ -141,15 +182,266 @@ void lihatbuku() {
 	printf(" \n Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
 }
 
+void judul_asc()
+{
+	databuku *d, d1;
+	FILE *fp;
+
+	fp = fopen ("databuku.txt", "r");
+	fseek (fp,0,SEEK_END);
+
+	int n = ftell(fp)/sizeof(databuku);
+	
+	d = (databuku*) calloc (n, sizeof(databuku));
+	rewind(fp);
+
+	for (int i = 0; i < n; i++)
+		fread (&d[i], sizeof(databuku), 1, fp);
+	
+	fp = fopen ("databuku.txt", "w");
+
+	for (int i = 0; i < n; i++) {
+		for (int j = i+1; j < n; j++)
+			if((strcmp (d[i].judul, d[j].judul) > 0)) {
+				d1   = d[i];
+				d[i] = d[j];
+				d[j] = d1;			
+			}
+
+		fwrite(&d[i],sizeof (databuku),1,fp);
+	}
+	fclose (fp);
+}
+
+void judul_desc()
+{
+	databuku *d, d1;
+	FILE *fp;
+
+	fp = fopen ("databuku.txt", "r");
+	fseek (fp,0,SEEK_END);
+
+	int n = ftell(fp)/sizeof(databuku);
+	
+	d = (databuku*) calloc (n, sizeof(databuku));
+	rewind(fp);
+
+	for (int i = 0; i < n; i++)
+		fread (&d[i], sizeof(databuku), 1, fp);
+	
+	fp = fopen ("databuku.txt", "w");
+
+	for (int i = 0; i < n; i++) {
+		for (int j = i+1; j < n; j++)
+			if((strcmp (d[i].judul, d[j].judul) < 0)) {
+				d1   = d[i];
+				d[i] = d[j];
+				d[j] = d1;			
+			}
+
+		fwrite(&d[i],sizeof (databuku),1,fp);
+	}
+	fclose (fp);
+}
+
+void pengarang_asc()
+{
+	databuku *d, d1;
+	FILE *fp;
+	int min;
+
+	fp = fopen ("databuku.txt", "r");
+	fseek (fp,0,SEEK_END);
+
+	int n = ftell(fp)/sizeof(databuku);
+	
+	d = (databuku*) calloc (n, sizeof(databuku));
+	rewind(fp);
+	
+	for (int i = 0; i < n; i++)
+		fread (&d[i], sizeof(databuku), 1, fp);
+	
+	fp = fopen ("databuku.txt", "w");
+
+	for (int i = 0; i < n; i++) {
+		min = i;
+		for (int j = i; j < n; j++) {
+			if((strcmp (d[i].pengarang, d[j].pengarang) > 0)) {
+				min = j;		
+			}
+
+			d1   = d[i];
+			d[i] = d[j];
+			d[j] = d1;	
+		}
+		fwrite(&d[i],sizeof (databuku),1,fp);
+	}
+	fclose (fp);
+}
+
+void pengarang_desc()
+{
+	databuku *d, d1;
+	FILE *fp;
+	int min;
+
+	fp = fopen ("databuku.txt", "r");
+	fseek (fp,0,SEEK_END);
+
+	int n = ftell(fp)/sizeof(databuku);
+	
+	d = (databuku*) calloc (n, sizeof(databuku));
+	rewind(fp);
+
+	for (int i = 0; i < n; i++)
+		fread (&d[i], sizeof(databuku), 1, fp);
+	
+	fp = fopen ("databuku.txt", "w");
+	for (int i = 0; i < n; i++) {
+		min = i;
+		for (int j = i; j < n; j++) {
+			if((strcmp (d[i].pengarang, d[j].pengarang) < 0)) {
+				min = j;			
+			}
+
+			d1   = d[i];
+			d[i] = d[j];
+			d[j] = d1;
+		}
+		fwrite(&d[i],sizeof (databuku),1,fp);
+	}
+	fclose (fp);
+}
+
+void hal_asc()
+{
+	databuku *d, d1;
+	FILE *fp;
+
+	fp = fopen ("databuku.txt", "r");
+	fseek (fp,0,SEEK_END);
+
+	int n = ftell(fp)/sizeof(databuku);
+	
+	d = (databuku*) calloc (n, sizeof(databuku));
+	rewind(fp);
+
+	for (int i = 0; i < n; i++)
+		fread (&d[i], sizeof(databuku), 1, fp);
+	
+	fp = fopen ("databuku.txt", "w");
+
+	for (int i = 0; i < n; i++) {
+		for (int j = i+1; j < n; j++)
+			if((strcmp (d[i].halaman, d[j].halaman) > 0)) {
+				d1   = d[i];
+				d[i] = d[j];
+				d[j] = d1;			
+			}
+
+		fwrite(&d[i],sizeof (databuku),1,fp);
+	}
+	fclose (fp);
+}
+
+void hal_desc()
+{
+	databuku *d, d1;
+	FILE *fp;
+
+	fp = fopen ("databuku.txt", "r");
+	fseek (fp,0,SEEK_END);
+
+	int n = ftell(fp)/sizeof(databuku);
+	
+	d = (databuku*) calloc (n, sizeof(databuku));
+	rewind(fp);
+
+	for (int i = 0; i < n; i++)
+		fread (&d[i], sizeof(databuku), 1, fp);
+	
+	fp = fopen ("databuku.txt", "w");
+
+	for (int i = 0; i < n; i++) {
+		for (int j = i+1; j < n; j++)
+			if((strcmp (d[i].halaman, d[j].halaman) < 0)) {
+				d1   = d[i];
+				d[i] = d[j];
+				d[j] = d1;			
+			}
+
+		fwrite(&d[i],sizeof (databuku),1,fp);
+	}
+	fclose (fp);
+}
+
+void menuurut()
+{
+	system("cls");
+	printf("\t\t\t\t\t\tMENU URUT DATA\n");
+	puts("\n Pilih Menu Dibawah Ini Untuk Menentukan Metode Pengurutan");
+	puts("  a.  Urut Berdasarkan Judul Buku (Ascending)");
+    puts("  b.  Urut Berdasarkan Judul Buku (Descending)");
+    puts("  c.  Urut Berdasarkan Nama pengarangdara (Ascending)");
+    puts("  d.  Urut Berdasarkan Nama Pengarang (Descending)");
+    puts("  e.  Urut Berdasarkan halaman Buku (Ascending)");
+    puts("  f.  Urut Berdasarkan Halaman Buku (Descending)");
+    garis(120);
+
+    switch(getch()){
+		case 'a' :
+			judul_asc();
+			printf(" Menu Pilihan  : Urut Berdasarkan Judul Buku (Ascending)");
+        	printf("\n Data Telah Berhasil Diurutkan!");
+        	printf("\n Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.");
+        	printf("\n Tekan ENTER untuk kembali ke Menu Utama.");
+        	break;
+        case 'b' :
+			judul_desc();
+        	printf(" Menu Pilihan  : Urut Berdasarkan Judul Buku (Descending)");
+        	printf("\n Data Telah Berhasil Diurutkan!");
+        	printf("\n Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.");
+        	printf("\n Tekan ENTER untuk kembali ke Menu Utama.");
+        	break;
+        case 'c' :
+			pengarang_asc();
+        	printf(" Menu Pilihan  : Urut Berdasarkan Nama Pengarang (Ascending)");
+        	printf("\n Data Telah Berhasil Diurutkan!");
+        	printf("\n Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.");
+        	printf("\n Tekan ENTER untuk kembali ke Menu Utama.");
+        	break;
+        case 'd' :
+			pengarang_desc();
+        	printf(" Menu Pilihan  : Urut Berdasarkan Nama Pengarang (Descending)");
+        	printf("\n Data Telah Berhasil Diurutkan!");
+        	printf("\n Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.");
+        	printf("\n Tekan ENTER untuk kembali ke Menu Utama.");
+        	break;
+        case 'e' :
+			hal_asc();
+        	printf(" Menu Pilihan  : Urut Berdasarkan Halaman Buku (Ascending)");
+        	printf("\n Data Telah Berhasil Diurutkan!");
+        	printf("\n Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.");
+        	printf("\n Tekan ENTER untuk kembali ke Menu Utama.");
+        	break;
+        case 'f' :
+			hal_desc();
+        	printf(" Menu Pilihan  : Urut Berdasarkan Halaman Buku (Descending)");
+        	printf("\n Data Telah Berhasil Diurutkan!");
+        	printf("\n Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.");
+        	printf("\n Tekan ENTER untuk kembali ke Menu Utama.");
+        	break;
+    }
+}
 
 int main(int argc, char *argv[]){
-	int i;
 	gotoxy(32,13);
 	system("color 0d");
 	load1();
 	load2();
   	gotoxy(48,12); loadbar();
 	system("cls");
+
 	do
 	{
 		system("color 0d");
@@ -169,25 +461,24 @@ int main(int argc, char *argv[]){
 	    puts("  7.  Penilaian Buku");
 	    puts(" Esc. Exit\n");
 
-		switch (getch())
-		{
-		case '1' :// Tambah Buku
-			tambahdata();
-			break;
-		case '2' :// Lihat Buku
-			lihatbuku();
-			break;
-		case '3' :// Ubah Buku
-	        break;
-	    case '4' :// Hapus Buku
-	        break;
-	    case '5' :// Urutkan Buku
-	        break;
-	    case '6' :// Cari Buku
-	        break;
-	    case '7' :// Penilaian Buku
-	        break;
+		switch (getch()){
+			case '1' :// Tambah Buku
+				tambahdata();
+				break;
+			case '2' :// Lihat Buku
+				lihatbuku();
+				break;
+			case '3' :// Ubah Buku
+				break;
+			case '4' :// Hapus Buku
+				break;
+			case '5' :// Urutkan Buku
+				menuurut();
+				break;
+			case '6' :// Cari Buku
+				break;
+			case '7' :// Penilaian Buku
+				break;
 		}
-		
 	} while (getch()!= 27);
 }
