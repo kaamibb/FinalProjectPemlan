@@ -233,6 +233,45 @@ void ubahdata() {
 	fclose(fp);
 }
 
+
+void hapusdata() {
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char judul[50];
+	system("cls");
+	printf("\t\t\t\t\t\tMENU HAPUS DATA\n\n");
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+	printf(" Masukkan Nama Buku Yang Ingin Dihapus : ");
+	gets(judul);
+	while (fread(&d1, sizeof(databuku), 1, fp)) {
+		if((strcmp (judul, d1.judul) == 0)) {
+			ditemukan = 1;
+		} else {
+			fwrite (&d1, sizeof (databuku), 1, fp1);
+		}
+	}
+	fclose(fp);
+	fclose(fp1);
+	if (ditemukan) {
+		fp1 = fopen ("ubahdata.txt", "r");
+		fp = fopen ("databuku.txt", "w");
+		while (fread(&d1, sizeof(databuku), 1, fp1)) {
+			fwrite (&d1, sizeof(databuku), 1, fp);
+		}
+		printf("\n Data Buku Telah Dihapus!\n");
+		printf(" Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+		fclose(fp);
+		fclose(fp1);
+	} else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+	fclose(fp);
+}
+
 void judul_asc()
 {
 	databuku *d, d1;
@@ -523,6 +562,7 @@ int main(int argc, char *argv[]){
 				ubahdata();
 				break;
 			case '4' :// Hapus Buku
+				hapusdata();
 				break;
 			case '5' :// Urutkan Buku
 				menuurut();
