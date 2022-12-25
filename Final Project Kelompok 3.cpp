@@ -182,6 +182,57 @@ void lihatbuku()
 	printf(" \n Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
 }
 
+void ubahdata() {
+	databuku d1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char judul[50];
+	system("cls");
+	printf("\t\t\t\t\t\tMENU EDIT DATA\n\n");
+	fp = fopen ("databuku.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+	printf(" Masukkan Nama Buku Yang Ingin Diubah : ");
+	gets(judul);
+	while (fread(&d1, sizeof(databuku), 1, fp)) {
+		if((strcmp (judul, d1.judul) == 0)) {
+			ditemukan = 1;
+			printf("\n Masukkan Data Buku Baru \n");
+			printf(" Judul Buku\t\t: ");
+			fflush(stdin);
+			gets(d1.judul);
+			printf(" Pengarang\t\t: ");
+			gets(d1.pengarang);
+			printf(" Genre\t\t\t: ");
+			gets(d1.genre);
+			printf(" Tanggal Perilisan\t: ");
+			gets(d1.tanggal);
+			printf(" Rating Umur\t\t: ");
+			gets(d1.rating);
+			printf(" Halaman Buku\t\t: ");
+			gets(d1.halaman);
+		}
+		fwrite (&d1, sizeof (databuku), 1, fp1);
+	}
+	fclose(fp);
+	fclose(fp1);
+	if (ditemukan) {
+		fp1 = fopen ("ubahdata.txt", "r");
+		fp = fopen ("databuku.txt", "w");
+		while (fread(&d1, sizeof(databuku), 1, fp1)) {
+			fwrite (&d1, sizeof(databuku), 1, fp);
+		}
+		printf("\n Data Buku Telah Berhasil Diubah!\n");
+		printf(" Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+		fclose(fp);
+		fclose(fp1);
+	} else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+	fclose(fp);
+}
+
 void judul_asc()
 {
 	databuku *d, d1;
@@ -469,6 +520,7 @@ int main(int argc, char *argv[]){
 				lihatbuku();
 				break;
 			case '3' :// Ubah Buku
+				ubahdata();
 				break;
 			case '4' :// Hapus Buku
 				break;
