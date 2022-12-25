@@ -5,9 +5,16 @@
 #include <iostream>
 
 using namespace std;
-typedef struct Date Date;
-typedef struct Books Books;
-typedef struct Penilaian Penilaian;
+
+typedef struct databuku
+{
+	char judul[50];
+	char pengarang[30];
+	char genre[20];
+	char tanggal[15];
+	char rating[5];
+	char halaman[100];
+}databuku;
 
 void gotoxy(int x, int y) {
     COORD coord;
@@ -77,28 +84,42 @@ void loadbar()
 		  
 }
 
-struct Date
-{
-	int day;
-	int month;
-	int year;
-};
+void tambahdata() {
+	databuku *d;
+	FILE *fp;
+	int n, i, j;
+	system("cls");
+	printf("\n\t\t\t\t\t\tMENU TAMBAH DATA\n\n");
+	printf (" Masukkan Jumlah Data Buku Yang Akan diinput : ");
+	scanf ("%d", &n);
 
-struct Penilaian{
-	char judul_bk[50], nama[30], pekerjaan[50];
-	float nilai;
-	char pesan[100];
-};
+	d = (databuku*) calloc(n, sizeof(databuku));
+	fp = fopen ("databuku.txt","a");
 
-struct Books
-{
-	char judul[50], pengarang[30], genre[20];
-	Date date;
-	float rating;
-	int halaman;
-};
-    
-int main(){
+	for (i = 0; i < n; i++) {
+		printf("\n Masukkan Data Buku ke - %d\n", i+1);
+		printf(" Judul Buku\t\t: ");
+		fflush(stdin);
+		gets(d[i].judul);
+		printf(" Pengarang\t\t: ");
+		gets(d[i].pengarang);
+		printf(" Genre\t\t\t: ");
+		gets(d[i].genre);
+		printf(" Tanggal Perilisan\t: ");
+		gets(d[i].tanggal);
+		printf(" Rating Umur\t\t: ");
+		gets(d[i].rating);
+		printf(" Halaman Buku\t\t: ");
+		gets(d[i].halaman);
+		fwrite(&d[i], sizeof(databuku),1,fp);
+	}
+	fclose (fp);
+	printf(" \n\n Data Buku Telah Disimpan.\n");
+	printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+}
+
+
+int main(int argc, char *argv[]){
 	int i;
 	gotoxy(32,13);
 	system("color 0d");
@@ -106,13 +127,9 @@ int main(){
 	load2();
   	gotoxy(48,12); loadbar();
 	system("cls");
-
-	//code
-	int pilih;
-
 	do
 	{
-		system("color 06");
+		system("color 0d");
 		system("cls");
 		garis(120);
 		printf("\t\t\t\t\t Final Project Pemrograman Lanjut E081\n");
@@ -131,27 +148,21 @@ int main(){
 
 		switch (getch())
 		{
-		case 1: // Tambah Buku
-			/* code */
+		case '1' :// Tambah Buku
+			tambahdata();
 			break;
-		case 2: // Lihat Buku
-			/* code */
+		case '2' :// Lihat Buku
 			break;
-		case 3: // Ubah Buku
-			/* code */
-			break;
-		case 4: // Hapus Buku
-			/* code */
-			break;
-		case 5: // Urutkan Buku
-			/* code */
-			break;
-		case 6: // Cari Buku
-			/* code */
-			break;
-		case 7: // Penilaian Buku
-			/* code */
-			break;
+		case '3' :// Ubah Buku
+	        break;
+	    case '4' :// Hapus Buku
+	        break;
+	    case '5' :// Urutkan Buku
+	        break;
+	    case '6' :// Cari Buku
+	        break;
+	    case '7' :// Penilaian Buku
+	        break;
 		}
 		
 	} while (getch()!= 27);
