@@ -21,7 +21,7 @@ typedef struct Penilaian
 	char judul_bk[30];
 	char namap[30];
 	char pekerjaan[20];
-
+	
 	struct menilai
 	{
 		int nilai;
@@ -40,14 +40,14 @@ pertanyaan jumlah[10] =
 {
 	{"Apakah buku ini sesuai ekspetasi anda?"},
 	{"Apakah alur cerita buku ini menyenangkan?"},
-	{"?"},
-	{"?"},
+	{"Menurut anda apakah buku ini banyak terdapat kekurangan?"},
+	{"Apakah gaya bahasa dalam buku ini sesuai dengan selera anda?"},
 	{"Berikan penilaian untuk tokoh dari buku tersebut?"},
-	{"?"},
-	{"?"},
+	{"Apakah anda tertarik dengan buku ini? ?"},
+	{"Apakah cover buku ini menarik?"},
 	{"Seberapa besar pesan yang disampaikan oleh buku tersebut?"},
-	{"?"},
-	{"?"}
+	{"Seberapa fleksibel buku ini  dibaca dimanapun?"},
+	{"Seberapa baik kualitas buku ini?"}
 };
 
 void gotoxy(int x, int y) {
