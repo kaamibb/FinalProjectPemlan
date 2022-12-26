@@ -819,6 +819,45 @@ void tampilnilai() {
 	printf(" \n Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
 }
 
+void hapuspenilaian() {
+	penilaian n1;
+	FILE *fp, *fp1;
+	int ditemukan = 0;
+	char penilai[50];
+	system("cls");
+	printf("\t\t\t\t\t\tMENU HAPUS PENILAIAN\n\n");
+	fp = fopen ("datapenilaian.txt", "r");
+	fp1 = fopen ("ubahdata.txt", "w");
+	fflush(stdin);
+	printf(" Masukkan Nama Penilai Dari Penilaian Yang Ingin Dihapus : ");
+	gets(penilai);
+	while (fread(&n1, sizeof(penilaian), 1, fp)) {
+		if((strcmp (penilai, n1.namap) == 0)) {
+			ditemukan = 1;
+		} else {
+			fwrite (&n1, sizeof (penilaian), 1, fp1);
+		}
+	}
+	fclose(fp);
+	fclose(fp1);
+	if (ditemukan) {
+		fp1 = fopen ("ubahdata.txt", "r");
+		fp = fopen ("datapenilaian.txt", "w");
+		while (fread(&n1, sizeof(penilaian), 1, fp1)) {
+			fwrite (&n1, sizeof(penilaian), 1, fp);
+		}
+		printf("\n Data Buku Telah Dihapus!\n");
+		printf(" Silahkan Klik Menu Tampilkan Data Untuk Melihat Hasilnya.\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+		fclose(fp);
+		fclose(fp1);
+	} else {
+		printf("\n Data Buku Tidak Ditemukan!\n");
+		printf(" Tekan ENTER Untuk Kembali Ke Menu Sebelumnya.\n");
+	}
+	fclose(fp);
+}
+
 void menunilai() {
 	do {
 		system("cls");
@@ -829,11 +868,11 @@ void menunilai() {
 	    puts("   3.  Hapus Penilaian");
 	    puts("  00.  Kembali Ke Menu Awal");
 		switch(getch()){
-			case '1' : tambahnilai();
+		case '1' : tambahnilai();
 	        break;
 	        case '2' : tampilnilai();
 	        break;
-	        case '3' : 
+	        case '3' : hapuspenilaian();
 	        break;
 	        case '0' : goto awal;
 	        break;
