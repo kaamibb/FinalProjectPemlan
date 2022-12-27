@@ -68,7 +68,7 @@ void garis(int x) {
 void delay() {
 	int delay;
 	delay = 1;
-	while(delay<200000000) {
+	while(delay<1000000000) {
 		delay++;
 	}
 }	
@@ -81,7 +81,6 @@ void load1()
 		printf("%c\t", load[i]);
 		delay();
 	}
-
 	Sleep(2);
 }
 
@@ -700,7 +699,7 @@ void menuurut()
 	puts("\n Pilih Menu Dibawah Ini Untuk Menentukan Metode Pengurutan");
 	puts("  a.  Urut Berdasarkan Judul Buku (Ascending)");
     puts("  b.  Urut Berdasarkan Judul Buku (Descending)");
-    puts("  c.  Urut Berdasarkan Nama pengarangdara (Ascending)");
+    puts("  c.  Urut Berdasarkan Nama pengarang (Ascending)");
     puts("  d.  Urut Berdasarkan Nama Pengarang (Descending)");
     puts("  e.  Urut Berdasarkan halaman Buku (Ascending)");
     puts("  f.  Urut Berdasarkan Halaman Buku (Descending)");
