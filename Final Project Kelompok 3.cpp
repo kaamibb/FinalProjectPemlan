@@ -68,7 +68,7 @@ void garis(int x) {
 void delay() {
 	int delay;
 	delay = 1;
-	while(delay<1000000000) {
+	while(delay<10000000) {
 		delay++;
 	}
 }	
